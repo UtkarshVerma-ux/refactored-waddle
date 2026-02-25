@@ -531,23 +531,27 @@ def demonstrate_layer3(model, X_test, y_test, crop_names, sample_idx=0):
         return
     
     # ========================================
-    # LAYER 3B + 3C: For top 3 feasible crops
+    # LAYER 3B + 3C: For top 5 feasible crops
     # ========================================
     
     # Sort feasible crops by climate score
     feasible_crops.sort(key=lambda x: x['score'], reverse=True)
     
+    # Analyze top 5 (some may be filtered out if DiCE fails)
+    n_to_analyze = min(5, len(feasible_crops))
+    
     recommendations = []
     
     print(f"\n{'='*70}")
-    print(f"GENERATING RECOMMENDATIONS FOR TOP 3 FEASIBLE CROPS")
+    print(f"GENERATING RECOMMENDATIONS FOR TOP {n_to_analyze} FEASIBLE CROPS")
+    print(f"(Out of {len(feasible_crops)} climatically suitable crops)")
     print(f"{'='*70}")
     
-    for i, crop_info in enumerate(feasible_crops[:3], 1):
+    for i, crop_info in enumerate(feasible_crops[:n_to_analyze], 1):
         target_crop = crop_info['crop']
         
         print(f"\n{'─'*70}")
-        print(f"RECOMMENDATION {i}: {target_crop.upper()}")
+        print(f"RECOMMENDATION {i}/{n_to_analyze}: {target_crop.upper()}")
         print(f"{'─'*70}")
         
         # Generate counterfactual
