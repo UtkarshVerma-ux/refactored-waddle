@@ -1,0 +1,52 @@
+
+# HOW TO USE THIS MODEL IN XAI FRAMEWORK
+
+## Load Model:
+```python
+import pickle
+
+with open('models/RF_MODEL_FOR_XAI.pkl', 'rb') as f:
+    model_package = pickle.load(f)
+
+model = model_package['model']
+engineer_features = model_package['engineer_features_function']
+crop_names = model_package['crop_names']
+```
+
+## Make Predictions (IMPORTANT - Apply Feature Engineering!):
+```python
+import pandas as pd
+
+# Your input
+sample = {
+    'N': 78, 'P': 42, 'K': 43,
+    'temperature': 25, 'humidity': 80,
+    'ph': 6.5, 'rainfall': 1200
+}
+
+X = pd.DataFrame([sample])
+
+# CRITICAL: Apply feature engineering!
+X_engineered = engineer_features(X)  # 7 → 14 features
+
+# Predict
+prediction = model.predict(X_engineered)[0]
+probabilities = model.predict_proba(X_engineered)[0]
+
+print(f"Predicted crop: {prediction}")
+```
+
+## Model Info:
+- Test Accuracy: 96.55%
+- F1-Score: 0.9655
+- Cross-Validation: 95.93% ± 0.48%
+- Features: 14 (7 original + 7 engineered)
+- Crops: 36
+
+## Engineered Features:
+N_P_ratio, N_K_ratio, P_K_ratio, NPK_sum, temp_humidity, ph_acidic, ph_alkaline
+
+## IMPORTANT FOR XAI LAYERS:
+1. SHAP: Use X_engineered (14 features)
+2. LIME: Use X_engineered (14 features)
+3. DiCE: Use X_engineered, but only vary controllable features!

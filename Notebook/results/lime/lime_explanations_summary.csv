@@ -1,0 +1,6 @@
+Sample_Index,True_Label,Prediction,Confidence,Explanation_Time,Top_Feature
+3370,rice,rice,71.00%,0.19s,humidity > 80.43
+1295,eggplant,eggplant,77.00%,0.17s,ph > 6.50
+3964,mungbean,mungbean,99.00%,0.16s,NPK_sum <= 163.00
+2621,potato,potato,82.00%,0.22s,108.07 < rainfall <= 610.00
+4157,lentil,lentil,94.00%,0.22s,64.70 < humidity <= 72.20

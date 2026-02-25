@@ -1,0 +1,2 @@
+Model,Test Accuracy,F1-Score (weighted),CV Mean Accuracy,CV Std,Total Errors,Error Rate
+Random Forest,0.9573,0.9572,0.9566,0.0059,47,4.27%
